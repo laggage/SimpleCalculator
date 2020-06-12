@@ -10,22 +10,23 @@ namespace SimpleCalculator
         private static ExpressionTreeArithmetricCalculator _calculator;
 
         private Expression _expr;
-        private Func<double> _calculate;
+        
+        internal IExpressionTreeCalculatorEngine CalculateEngine { get; set; }
 
         private ExpressionTreeArithmetricCalculator(Expression expr)
         {
             SetExpr(expr);
+            CalculateEngine = new DefaultCalculatorEngine();
         }
 
         private void SetExpr(Expression expr)
         {
             _expr=expr ?? throw new ArgumentNullException(nameof(expr));
-            _calculate = Expression.Lambda<Func<double>>(_expr).Compile();
         }
 
         public double Calculate()
         {
-            return _calculate.Invoke();
+            return CalculateEngine.Calculate(_expr);
         }
 
         public static IArithmetricCalculator Create(Expression expr)

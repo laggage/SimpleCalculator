@@ -24,3 +24,9 @@
 IArithmetricCalculator calculator = ExpressionTreeArithmetricCalculator.Create(exprText);
 double res = calculator.Calculate();
 ```
+
+## 如何计算最终结果?
+
+使用策略模式, 定义一个 `IExpressionTreeCalculatorEngine` 接口, 这个类作为 `Calculator` 类的一个私有字段, 有两个类实现了 `IExpressionTreeCalculatorEngine`, 也就是有两种策略来根据生成的 `Expression` 计算最终结果, 分别是 
+- `RecursionExpressionTreeCalculatorEngine`, 这个类通过继承 `ExpressionVisitor`来递归遍历各个表达式节点, 类似二叉树的后序遍历;
+- `DefaultCalculatorEngine`, 这个策略就很简单了, 直接将作为参数的传递过来的表达式通过 `Expression.Lambda()` 生成 lambda 表达式然后编译得到结果;

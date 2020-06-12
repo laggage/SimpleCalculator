@@ -19,6 +19,10 @@ namespace SimpleCalculate.Test
         [InlineData("5%2", 1)]
         [InlineData("5%2+3^2", 10)]
         [InlineData("10^3+5", 1e+3 + 5)]
+        [InlineData("5", 5)]
+        [InlineData("(-5)", -5)]
+        [InlineData("+5", 5)]
+        [InlineData("(+5)", 5)]
         public void CalculateTest(string exprText, double expect)
         {
             IArithmetricCalculator calculator = ExpressionTreeArithmetricCalculator.Create(exprText);

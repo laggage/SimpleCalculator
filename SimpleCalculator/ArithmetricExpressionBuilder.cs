@@ -142,7 +142,10 @@ namespace SimpleCalculator
                             double.Parse(postFix[i])));
                 }
             }
-            _exprTree = stack.Pop() as BinaryExpression;
+            if (stack.Peek() is BinaryExpression binaryExpression)
+                _exprTree = binaryExpression;
+            else if (stack.Peek() is ConstantExpression constantExpression)
+                _exprTree = Expression.Add(constantExpression, Expression.Constant(0d)); // 单独一个表达式 5 
         }
 
         public BinaryExpression Build()
